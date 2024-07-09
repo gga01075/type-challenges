@@ -18,7 +18,7 @@ const todo: MyReadonly<Todo> = {
 todo.title = "Hello" // Error: cannot reassign a readonly property
 todo.description = "barFoo" // Error: cannot reassign a readonly property
 
-// answer
+// 1️⃣ answer
 type MyReadonly<T> = {
   readonly [P in keyof T] : T[P];
 } 
