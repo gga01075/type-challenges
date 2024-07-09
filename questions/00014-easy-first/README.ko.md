@@ -10,12 +10,14 @@ type arr2 = [3, 2, 1]
 
 type head1 = First<arr1> // expected to be 'a'
 type head2 = First<arr2> // expected to be 3
+```
 
-// answer1
+### answer1️⃣
+```ts
 type First<T extends readonly any[]> = {
  [P in T[0]] : P
 }
-/*
+```
 😛 문제점
 
 코드는 원하는 결과를 제공하지 않습니다. 이 코드의 의미는 T 배열의 첫 번째 요소의 각 부분을 키로 사용하고,
@@ -28,14 +30,13 @@ T[0]은 배열 T의 첫 번째 요소의 타입을 나타내지만, P in T[0]은
 이는 단일 타입이 아니라 그 타입의 키를 순회하는 의미로 잘못 사용된 것입니다.
 
 배열의 첫 번째 요소의 타입을 단순히 반환하는 것이 목표인데, 이 코드는 객체를 만들려고 시도하고 있습니다.
-*/
 
 
-
-
-// answer2
+### answer2️⃣
+```ts
 type First<T extends readonly any[]> = T[0] extends [] ? never : T[0];
-/*
+```
+
 😛 문제점 
 배열의 첫 번째 요소의 타입을 반환하는데, 일부 상황에서는 의도한 대로 작동하지 않을 수 있습니다.
 
@@ -47,13 +48,12 @@ type First<T extends readonly any[]> = T[0] extends [] ? never : T[0];
 올바른 제네릭 타입 정의는 배열이 비어 있는지 확인하고, 비어 있지 않다면 첫 번째 요소의 타입을 반환하는 것입니다.
 이를 위해 조건부 타입과 infer 키워드를 사용하는 것이 더 적합합니다.
 
-*/
 
 
-// answer3
+### answer3️⃣
+```ts
 type First<T extends readonly any[]> = T extends [infer F, ...any[]] ? F : never;
-
-/*
+```
 😊 설명
 
 infer 키워드는 TypeScript의 조건부 타입에서 사용되는 기능으로, 타입을 추론할 수 있게 해줍니다.
@@ -70,9 +70,7 @@ infer F는 T의 첫 번째 요소의 타입을 F라는 이름으로 추론합니
 - 조건이 참이면, ? F에 의해 첫 번째 요소의 타입을 반환합니다.
 - 조건이 거짓이면, : never에 의해 never 타입을 반환합니다.
 
-*/
 
 
-```
 
 <!--info-footer-start--><br><a href="../../README.ko.md" target="_blank"><img src="https://img.shields.io/badge/-%EB%8F%8C%EC%95%84%EA%B0%80%EA%B8%B0-grey" alt="돌아가기"/></a> <a href="https://tsch.js.org/14/answer/ko" target="_blank"><img src="https://img.shields.io/badge/-%EC%A0%95%EB%8B%B5%20%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0-teal" alt="정답 공유하기"/></a> <a href="https://tsch.js.org/14/solutions" target="_blank"><img src="https://img.shields.io/badge/-%EC%A0%95%EB%8B%B5%20%EB%B3%B4%EA%B8%B0-de5a77?logo=awesome-lists&logoColor=white" alt="정답 보기"/></a> <hr><h3>관련된 문제들</h3><a href="https://github.com/type-challenges/type-challenges/blob/main/questions/00015-medium-last/README.ko.md" target="_blank"><img src="https://img.shields.io/badge/-15%E3%83%BBLast%20of%20Array-d9901a" alt="15・Last of Array"/></a> <!--info-footer-end-->
