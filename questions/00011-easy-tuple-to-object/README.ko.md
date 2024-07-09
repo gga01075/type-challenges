@@ -9,8 +9,9 @@ const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
 
 type result = TupleToObject<typeof tuple> // expected { 'tesla': 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
 ```
+
+### Answer1️⃣ 
 ```ts
-// Answer1️⃣ 
 type TupleToObject<T> = {
  [P keys of T] : P
 }
@@ -24,8 +25,9 @@ type TupleToObject<T> = {
 3. P의 사용
   P는 T의 요소가 되어야 합니다. keys of T는 잘못된 키워드이고, 우리가 원하는 것은 배열의 요소 타입입니다. 따라서 P는 T[number]로 접근해야 합니다.
 
+
+### Answer2️⃣
 ```ts
-// Answer2️⃣
 type TupleToObject<T extends any[]> = {
    [P in T] : P
 }
@@ -37,9 +39,8 @@ type TupleToObject<T extends any[]> = {
 올바른 접근 방법
   올바르게 타입을 정의하기 위해서는 배열의 각 요소를 키로 사용해야 합니다. 이를 위해 T[number]를 사용하여 배열 T의 요소 타입을 가져와야 합니다.
 
-
+### Answer3️⃣
 ```ts
-// Answer3️⃣
 type TupleToObject<T extends readonly any[]> = {
   [P in T[number]]: P;
 };
