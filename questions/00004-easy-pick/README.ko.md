@@ -19,7 +19,7 @@ const todo: TodoPreview = {
 }
 
 
-// 1️⃣ answer
+// Answer1️⃣ 
 type MyPick<T, K extends keyof T> {
   [P in K] : T[P];
 }
